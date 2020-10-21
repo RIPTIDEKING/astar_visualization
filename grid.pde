@@ -19,8 +19,8 @@ class Grid {
       for (int j=1; j<=rows; j++) {
         if (random(1)<=prob) {
           float tw, th;
-          int frac = 11;
-          int mult = 5;
+          int frac = 11;//11
+          int mult = 5;//5
           tw = map(random(1), 0, 1, -mult*w/frac, mult*w/frac);
           th = map(random(1), 0, 1, -mult*h/frac, mult*h/frac);
           cty.add(new City(i*w+tw, j*h+th));
@@ -29,11 +29,11 @@ class Grid {
     }
     
     ctyL = cty.size();
-    openS.add(0);
+    openS.add(startC);
     goal = ctyL-1;
     // setting heuristic
     for(int i=0;i<ctyL; i++){
-      cty.get(i).findh(cty.get(ctyL-1));
+      cty.get(i).findh(cty.get(goal));
     }
     
     
@@ -64,6 +64,26 @@ class Grid {
     if (i < clms-1) {
       ni = i+1;
       nj = j;
+      con.add(ni+nj*clms);
+    }
+    if (j > 0) {
+      ni = i;
+      nj = j-1;
+      con.add(ni+nj*clms);
+    }
+    if (i > 0) {
+      ni = i-1;
+      nj = j;
+      con.add(ni+nj*clms);
+    }
+    if(j > 0 && i > 0){
+      ni = i-1;
+      nj = j-1;
+      con.add(ni+nj*clms);
+    }
+    if(j > 0 && i < clms-1){
+      ni = i+1;
+      nj = j-1;
       con.add(ni+nj*clms);
     }
     if (i < clms-1 && j < rows-1) {

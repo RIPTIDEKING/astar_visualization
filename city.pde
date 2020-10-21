@@ -4,6 +4,7 @@ class City{
   float f;
   float g = 0;
   float h;
+  int pre=-1;
   
   City(float i,float j){
     x = i;
@@ -17,6 +18,14 @@ class City{
   void findfg(City cty){
     g = dist(x,y,cty.x,cty.y) + cty.g;
     f = g+h;
+  }
+  boolean updatefg(City cty){
+    float tg = dist(x,y,cty.x,cty.y) + cty.g;
+    boolean ret = tg < g ;
+    if(ret){
+      f = g+h;
+    }
+    return ret;
   }
   
 }
