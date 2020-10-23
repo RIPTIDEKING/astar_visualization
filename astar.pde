@@ -1,16 +1,13 @@
 void asupdate() {
-  // removing current from open set
-  for (int i=openS.size()-1; i>=0; i--) {
-    if (openS.get(i) == current) {
-      openS.remove(i);
-      closeS.add(current);
-    }
-  }
+  
 
   ArrayList<Integer> neighind;
   neighind = places.connt(current);
   boolean flag = false;
   for (int i=0; i<neighind.size(); i++) {
+    if(places.cty.get(neighind.get(i)).obs){
+      continue;
+    }
     flag = false;
     for (int j : closeS) {
       if (j == neighind.get(i)) {
@@ -35,26 +32,8 @@ void asupdate() {
     }
 
     places.cty.get(neighind.get(i)).findfg(places.cty.get(current));
-    //if (places.cty.get(neighind.get(i)).pre == -1) {
     places.cty.get(neighind.get(i)).pre = current;
-    //} else {
-    //println("already pre: ",current,neighind.get(i),places.cty.get(neighind.get(i)).pre);
-    //println("\n");
-    //println(neighind.get(i), "\n");
-    //printArray(openS);
-    //printArray(closeS);
-    //printArray(neighind);
-
-    //  for (int j:closeS) {
-    //  if (neighind.get(i) == j) {
-    //    flag = true;
-    //    println("000000s0s0s0s0s0s00s");
-    //    break;
-    //  }
-    //}
-
-    //  println("\n");
-    //}
+    
     openS.add(neighind.get(i));
   }
 
@@ -65,6 +44,14 @@ void asupdate() {
     }
   }
   //places.cty.get(win).pre = current;
+  // removing current from open set
+  for (int i=openS.size()-1; i>=0; i--) {
+    if (openS.get(i) == current) {
+      openS.remove(i);
+      closeS.add(current);
+    }
+  }
+  
   current = win;
   path.add(places.cty.get(current));
 }
@@ -77,8 +64,8 @@ void drawP(color col) {
     p = places.cty.get(temp).pre;
     stroke(col);
     line(places.cty.get(temp).x, places.cty.get(temp).y, places.cty.get(p).x, places.cty.get(p).y);
-    stroke(255,255,0);
-    point(places.cty.get(temp).x, places.cty.get(temp).y);
+    //stroke(255,255,0);
+    //point(places.cty.get(temp).x, places.cty.get(temp).y);
     temp = p;
   }
 }
